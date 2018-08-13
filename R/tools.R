@@ -2,6 +2,7 @@
 #' @description  return the toggle api token
 #' @param ask booleen do we have to ask if missing
 #' @importFrom magrittr %>% 
+#' @importFrom  keyring key_set_with_value
 #' @import keyring
 #' @export
 get_toggl_api_token <- function(ask=TRUE){
@@ -82,7 +83,7 @@ ask_toggl_api_token <- function (msg="toggl api token")
 #' @title correct_date
 #' @description  tricks to obtain iso 8601
 #'
-#' @param time as POSIXt
+#' @param time a POSIXt
 correct_date <- function(time){
   paste0(gsub(" ","T",as.character(time)),"+01:00")
 }

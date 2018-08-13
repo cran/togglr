@@ -6,20 +6,20 @@
 #' @param until stop date
 #'
 #' @export
-#'
+#' @import httr
 #' @importFrom lubridate years
 #' @importFrom  dplyr select one_of
 #' @importFrom stats setNames
 #' @importFrom purrr map
 #' @encoding UTF-8
 get_dashboard <- function(api_token = get_toggl_api_token(),
-                          workspace_id = get_workspace_id(),
+                          workspace_id = get_workspace_id(api_token),
                           since = Sys.Date() - lubridate::years(1),
                           until = Sys.Date()) {
   url <-
     sprintf(
       "https://toggl.com/reports/api/v2/summary?workspace_id=%s&since=%s&until=%s&user_agent=api_test",
-      get_workspace_id(),
+      workspace_id,
       format(since, "%Y-%m-%d"),
       format(until, "%Y-%m-%d")
       
@@ -85,7 +85,7 @@ n_to_tps <- function(n) {
 get_project_total <- function(project_name = get_context_project(),
 
                               api_token = get_toggl_api_token(),
-                              workspace_id = get_workspace_id(),
+                              workspace_id = get_workspace_id(api_token),
                               since = Sys.Date() - lubridate::years(1),
                               until = Sys.Date()) {
   dash <-
@@ -112,7 +112,7 @@ get_project_total <- function(project_name = get_context_project(),
 #'
 
 get_all_project_names <- function(api_token = get_toggl_api_token(),
-                                  workspace_id = get_workspace_id(),
+                                  workspace_id = get_workspace_id(api_token),
                                   since = Sys.Date() - lubridate::years(1),
                                   until = Sys.Date()) {
   dash <-
@@ -163,7 +163,7 @@ get_all_client_names <- function(api_token = get_toggl_api_token(),
 #'
 
 #' @export
-#' @importFrom dplyr mutate
+#' @importFrom dplyr mutate case_when
 #' @importFrom lubridate years
 #'
 #'

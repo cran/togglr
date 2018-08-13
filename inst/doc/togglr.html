@@ -12,7 +12,7 @@
 
 <meta name="author" content="Vincent Guyader" />
 
-<meta name="date" content="2017-12-07" />
+<meta name="date" content="2018-08-14" />
 
 <title>togglr</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">togglr</h1>
 <h4 class="author"><em>Vincent Guyader</em></h4>
-<h4 class="date"><em>2017-12-07</em></h4>
+<h4 class="date"><em>2018-08-14</em></h4>
 
 
 
@@ -89,10 +89,11 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <div id="set-toggl-api-token" class="section level2">
 <h2>Set toggl Api token</h2>
 <p>Go on toogl.com website : <code>https://toggl.com/app/profile</code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">togglr<span class="op">::</span><span class="kw">open_toggl_website</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">togglr<span class="op">::</span><span class="kw">open_toggl_website_profile</span>()</code></pre></div>
 <p>then select and copy your token api at the bottom of the page.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set_toggl_api_token</span>(<span class="st">&quot;your_token_api&quot;</span>)</code></pre></div>
-<p>You just need to do this ones.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(togglr)
+<span class="kw">set_toggl_api_token</span>(<span class="st">&quot;your_token_api&quot;</span>)</code></pre></div>
+<p>You just need to do this once.</p>
 </div>
 <div id="start-the-tracking-system" class="section level2">
 <h2>Start the tracking system</h2>
@@ -100,7 +101,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">toggl_start</span>()</code></pre></div>
 <p>By default the client name is “without client” you can choose (and eventualy create a client) by using :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">toggl_start</span>(<span class="dt">client =</span> <span class="st">&quot;my client&quot;</span>)</code></pre></div>
-<p>But can also choose the task and the project</p>
+<p>But you can also choose the task and the project</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">toggl_start</span>(<span class="dt">client =</span> <span class="st">&quot;my client&quot;</span>,
             <span class="dt">description =</span> <span class="st">&quot;what I'm doing&quot;</span>,
             <span class="dt">project_name =</span> <span class="st">&quot;my project&quot;</span>)</code></pre></div>
@@ -110,7 +111,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">toggl_stop</span>()</code></pre></div>
 </div>
 <div id="get-total-time-passed-on-the-current-project" class="section level2">
-<h2>get total time passed on the current project</h2>
+<h2>Get total time passed on the current project</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_current_duration</span>()<span class="co"># the current track</span>
 <span class="kw">get_project_task_detail</span>()<span class="co"># all the project (including the current track)</span></code></pre></div>
 </div>
@@ -119,11 +120,11 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_dashboard</span>()</code></pre></div>
 </div>
 <div id="use-rstudio-addins" class="section level2">
-<h2>use Rstudio Addins</h2>
+<h2>Use Rstudio Addins</h2>
 <p>This package comes with 2 Rstudio addins ‘start toggl’ and ‘stop toggl’, feel free to use keybindings for convenience.</p>
 </div>
-<div id="some-other-uselfull-functions-are-in-this-package" class="section level2">
-<h2>Some other uselfull functions are in this package</h2>
+<div id="some-other-useful-functions-are-in-this-package" class="section level2">
+<h2>Some other useful functions are in this package</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls</span>(package<span class="op">:</span>togglr)</code></pre></div>
 </div>
 
