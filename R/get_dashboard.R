@@ -1,4 +1,4 @@
-#' get all data from <http://toggl.com>
+#' get all data from <https://toggl.com>
 #'
 #' @param api_token the toggl api token
 #' @param workspace_id the workspace id
@@ -18,7 +18,7 @@ get_dashboard <- function(api_token = get_toggl_api_token(),
                           until = Sys.Date()) {
   url <-
     sprintf(
-      "https://toggl.com/reports/api/v2/summary?workspace_id=%s&since=%s&until=%s&user_agent=api_test",
+      "https://api.track.toggl.com/reports/api/v2/summary?workspace_id=%s&since=%s&until=%s&user_agent=api_test",
       workspace_id,
       format(since, "%Y-%m-%d"),
       format(until, "%Y-%m-%d")
@@ -210,9 +210,16 @@ get_project_task_detail <-
       
       
     if (humain) {
-      out <- 
-        out %>% mutate(time = n_to_tps(time))
+      out <- out %>% to_humain()
     }
     out
   }
 
+#' transforme time column into humain readable column
+#'
+#' @param df a data.frame
+#'
+#' @export
+to_humain <- function(df){
+  df %>% mutate(time = n_to_tps(time))
+}

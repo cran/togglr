@@ -8,8 +8,8 @@
 #' @param api_token the toggl api token
 #' @param client client name
 #' @param workspace_id workspace id
+#' @param tags tags
 #'
-
 #' @importFrom lubridate now
 #' @importFrom httr POST authenticate content
 #' @importFrom magrittr %>%
@@ -26,6 +26,7 @@ toggl_start <- function(description = get_context(),
                         project_name = get_context_project(),
                         start = now(),
                         api_token = get_toggl_api_token(),
+                        tags = NULL,
                         workspace_id = get_workspace_id(api_token)) {
   if (is.null(api_token)) {
     stop("you have to set your api token using set_toggl_api_token('XXXXXXXX')")
@@ -37,13 +38,14 @@ toggl_start <- function(description = get_context(),
   
   
   POST(
-    "https://www.toggl.com/api/v8/time_entries/start",
+    "https://api.track.toggl.com/api/v8/time_entries/start",
     # verbose(),
     authenticate(api_token, "api_token"),
     encode = "json",
     body = toJSON(list(
       time_entry = list(
         description = description,
+        tags = tags,
         created_with = "togglr",
         wid = workspace_id,
         pid = get_project_id(
@@ -104,7 +106,7 @@ toggl_stop <- function(current=get_current(),
     stop("i can't find any task to stop...")
     
   }
-  PUT(paste0("https://www.toggl.com/api/v8/time_entries/",current$id,"/stop"),
+  PUT(paste0("https://api.track.toggl.com/api/v8/time_entries/",current$id,"/stop"),
 
        # verbose(),
        authenticate(api_token,"api_token"),
@@ -128,12 +130,14 @@ toggl_stop <- function(current=get_current(),
 
 
 #' @title toggl_create
-#' @description  create a
+#' @description  create a time entry
 #' @param start time in POSIXt
 #' @param stop time in POSIXt
 #' @param duration in seconds
 #' @param description the task you did
 #' @param api_token the toggl api token
+#' @param pid pid
+#' @param tags tags
 #' @importFrom lubridate now
 #' @importFrom httr POST authenticate verbose
 #' @importFrom jsonlite toJSON
@@ -141,13 +145,26 @@ toggl_stop <- function(current=get_current(),
 #' \dontrun{
 #' options(toggl_api_token = "XXXXXXXX")# set your toggl api token here
 #' toggl_create(duration=1200)
+#' 
+#'toggl_create( description="description",
+#'              start=now(),
+#'              pid = get_project_id(project_name = "projectname",
+#'                                  create=TRUE,client = "client"),
+#'              duration=1000,
+#'              api_token=get_toggl_api_token())
+#' 
+#' 
+#' 
+#' 
 #' }
 #' @export
 toggl_create <- function(
   description=get_context(),
   start=now(),
+  pid = get_project_id(),
   stop,
   duration,
+  tags=NULL,
   api_token=get_toggl_api_token()){
   if (is.null(api_token)){
 
@@ -164,15 +181,20 @@ toggl_create <- function(
     duration <- round(as.numeric(difftime(stop,start,units = "secs")))
   }
 
+  if ( !missing(tags) && !is.list(tags)){
+    tags <- as.list(tags)
+  }
 
 
-  POST("https://www.toggl.com/api/v8/time_entries",
+  POST("https://api.track.toggl.com/api/v8/time_entries",
        verbose(),
        authenticate(api_token,"api_token"),
        encode="json",
 
        body=toJSON(list(time_entry = list(
          description = description,
+         pid = pid,
+         tags = tags,
                                    created_with = "togglr",
                                    duronly=FALSE,
                                    duration=duration,

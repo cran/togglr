@@ -6,7 +6,7 @@
 \alias{togglr}
 \title{This package allow user to track time  spend on R using the toggl.com timesheet}
 \description{
-This package allow user to track time  spend on R using the toggl.com timesheet
+toggl.com API
 }
 \author{
 vincent <vincent@thinkr.fr>

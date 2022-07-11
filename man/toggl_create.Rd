@@ -4,26 +4,48 @@
 \alias{toggl_create}
 \title{toggl_create}
 \usage{
-toggl_create(description = get_context(), start = now(), stop,
-  duration, api_token = get_toggl_api_token())
+toggl_create(
+  description = get_context(),
+  start = now(),
+  pid = get_project_id(),
+  stop,
+  duration,
+  tags = NULL,
+  api_token = get_toggl_api_token()
+)
 }
 \arguments{
 \item{description}{the task you did}
 
 \item{start}{time in POSIXt}
 
+\item{pid}{pid}
+
 \item{stop}{time in POSIXt}
 
 \item{duration}{in seconds}
 
+\item{tags}{tags}
+
 \item{api_token}{the toggl api token}
 }
 \description{
-create a
+create a time entry
 }
 \examples{
 \dontrun{
 options(toggl_api_token = "XXXXXXXX")# set your toggl api token here
 toggl_create(duration=1200)
+
+toggl_create( description="description",
+             start=now(),
+             pid = get_project_id(project_name = "projectname",
+                                 create=TRUE,client = "client"),
+             duration=1000,
+             api_token=get_toggl_api_token())
+
+
+
+
 }
 }

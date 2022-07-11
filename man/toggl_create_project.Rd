@@ -4,9 +4,15 @@
 \alias{toggl_create_project}
 \title{toggl_create_project}
 \usage{
-toggl_create_project(project_name = get_context_project(),
+toggl_create_project(
+  project_name = get_context_project(),
   api_token = get_toggl_api_token(),
-  workspace_id = get_workspace_id(api_token), client = NULL)
+  workspace_id = get_workspace_id(api_token),
+  client = NULL,
+  private = FALSE,
+  color = NULL,
+  active = TRUE
+)
 }
 \arguments{
 \item{project_name}{project name}
@@ -16,6 +22,12 @@ toggl_create_project(project_name = get_context_project(),
 \item{workspace_id}{workspace_id}
 
 \item{client}{client name}
+
+\item{private}{whether project is accessible for only project users or for all workspace users (boolean, default false)}
+
+\item{color}{id of the color selected for the project}
+
+\item{active}{boolean set project as active, TRUE by default}
 }
 \description{
 create a project

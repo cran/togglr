@@ -4,9 +4,14 @@
 \alias{get_project_id}
 \title{get_project_id}
 \usage{
-get_project_id(project_name = get_context_project(),
-  api_token = get_toggl_api_token(), create = FALSE, client = NULL,
-  workspace_id = get_workspace_id(api_token))
+get_project_id(
+  project_name = get_context_project(),
+  api_token = get_toggl_api_token(),
+  create = FALSE,
+  client = NULL,
+  workspace_id = get_workspace_id(api_token),
+  color = NULL
+)
 }
 \arguments{
 \item{project_name}{the project name}
@@ -18,6 +23,8 @@ get_project_id(project_name = get_context_project(),
 \item{client}{client name}
 
 \item{workspace_id}{workspace id}
+
+\item{color}{id of the color selected for the project}
 }
 \description{
 retrieve project id
