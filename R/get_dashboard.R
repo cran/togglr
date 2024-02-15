@@ -167,26 +167,45 @@ get_all_client_names <- function(api_token = get_toggl_api_token(),
 #' @importFrom lubridate years
 #'
 #'
-get_project_task_detail <-
+get_current_project_task_detail <-
   function(project_name = get_context_project(),
            api_token = get_toggl_api_token(),
            workspace_id = get_workspace_id(),
            since = Sys.Date() - lubridate::years(1),
            until = Sys.Date(),
            humain = TRUE) {
-    out <-
+    gd <-
       get_dashboard(
         api_token = api_token,
         workspace_id = workspace_id,
         since = since,
         until = until
-      )$tache[[project_name]]
+      )
+    if (isTRUE(project_name %in%  names(gd$tache))) {
+      info <- gd$tache[[project_name]]
+    } else{
+      info <-
+        structure(
+          list(
+            title = character(0),
+            time = numeric(0),
+            cur = numeric(0),
+            sum = numeric(0),
+            rate = numeric(0),
+            local_start = character(0)
+          ),
+          row.names = integer(0),
+          class = "data.frame"
+        )
+    }
+    
+    
     
     description <- get_current(api_token = api_token)$description
     
     if (!is.null(description)) {
-      if (description %in% out$title) {
-        out <-      out %>%
+      if (description %in% info$title) {
+        info <-      info %>%
           mutate(time = case_when(
             title == description ~
               (time + get_current_duration(api_token = api_token)) %>% as.double()
@@ -194,7 +213,7 @@ get_project_task_detail <-
             TRUE ~ time %>% as.double()
           ))
       } else {
-        out <- out %>% full_join(tribble(
+        info <- info %>% full_join(by = c("title", "time"),tribble(
           ~ title,        ~ time,
           description,    get_current_duration(api_token = api_token) %>% as.double()
           
@@ -209,10 +228,10 @@ get_project_task_detail <-
      
       
       
-    if (humain) {
-      out <- out %>% to_humain()
+    if (humain & nrow(info)>0) {
+      info <- info %>% to_humain()
     }
-    out
+    info
   }
 
 #' transforme time column into humain readable column
