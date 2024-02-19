@@ -1,7 +1,7 @@
 Type: Package
 Package: togglr
 Title: 'Toggl.com' Api for 'Rstudio'
-Version: 0.2
+Version: 0.2.1
 Authors@R: c(
     person("Vincent", "Guyader", , "vincent@thinkr.fr", role = c("aut", "cre")),
     person("ThinkR", role = c("cph", "fnd"))
@@ -19,9 +19,9 @@ ByteCompile: true
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2024-02-15 15:59:42 UTC; PC
+Packaged: 2024-02-19 14:57:46 UTC; PC
 Author: Vincent Guyader [aut, cre],
   ThinkR [cph, fnd]
 Maintainer: Vincent Guyader <vincent@thinkr.fr>
 Repository: CRAN
-Date/Publication: 2024-02-15 16:30:02 UTC
+Date/Publication: 2024-02-19 23:30:02 UTC
